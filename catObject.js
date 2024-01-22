@@ -1,6 +1,5 @@
-import {canvas, ctx} from "./canvas.js";
+import {canvas} from "./canvas.js";
 import {gameObject} from "./gameObject.js";
-// import {startGameClock, setNewTick, setDefaultFrameRate, interpolateValueToFPS} from "./FPSHelper.js";
 
 class CatObject extends gameObject {
     isMoving = false;
@@ -15,6 +14,7 @@ class CatObject extends gameObject {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
 
         // Check for landing on the ground
         if (this.position.y >= canvas.height - this.dimensions.height) {
