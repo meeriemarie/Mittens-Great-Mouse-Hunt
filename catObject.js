@@ -4,6 +4,7 @@ import {gameObject} from "./gameObject.js";
 class CatObject extends gameObject {
     isMoving = false;
     midair = false;
+    gotHit = false;
 
     updatePosition (CatObject) {
         this.velocity.x += this.acceleration.x;
