@@ -1,4 +1,4 @@
-import {mitten, platforms, mice} from "./script.js";
+import {mitten, platforms, mice, doggos} from "./script.js";
 import {scoreBoard} from "./scoreBoard.js";
 
 function handleCollisions () {
@@ -10,8 +10,7 @@ function handleCollisions () {
             mitten.position.y + mitten.dimensions.height > platform.position.y
         ) {
             // Top collision
-            if (mitten.velocity.y > 0 && mitten.position.y + mitten.dimensions.height - mitten.velocity.y <= platform.position.y
-                && mitten.position.x > platform.position.x && mitten.position.x + mitten.dimensions.width < platform.position.x + platform.dimensions.width) {
+            if (mitten.velocity.y > 0 && mitten.position.y + mitten.dimensions.height - mitten.velocity.y <= platform.position.y) {
                 mitten.velocity.y = 0;
                 mitten.position.y = platform.position.y - mitten.dimensions.height;
                 mitten.midair = false;
@@ -27,7 +26,7 @@ function handleCollisions () {
             // Left collision
             if (mitten.velocity.x > 0 && mitten.position.x + mitten.dimensions.width - mitten.velocity.x <= platform.position.x) {
                 mitten.velocity.x = 0;
-                mitten.position.x = platform.position.x - mitten.dimensions.width;
+                mitten.position.x= platform.position.x - mitten.dimensions.width - mitten.velocity.x;
             }
             // Right collision
             else if (
@@ -59,4 +58,14 @@ function collectMice () {
     })
 }
 
-export {handleCollisions, collectMice}
+function enemyAnimation () {
+    doggos.forEach (dog => {
+        platforms.forEach (platform => {
+            if(dog.position.x <= platform.position.x - dog.dimensions.width) {
+                dog.velocity.x *= -1
+            }
+        })
+    })
+}
+
+export {handleCollisions, collectMice, enemyAnimation}
