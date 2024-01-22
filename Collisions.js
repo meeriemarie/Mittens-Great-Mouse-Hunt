@@ -1,5 +1,6 @@
-import {mitten, platforms, mice, doggos} from "./script.js";
+import {mitten, platforms, mice, doggos, health, house} from "./script.js";
 import {scoreBoard} from "./scoreBoard.js";
+import {resetGame} from "./logicLayer.js";
 
 function handleCollisions () {
     platforms.forEach(platform => {
@@ -61,11 +62,41 @@ function collectMice () {
 function enemyAnimation () {
     doggos.forEach (dog => {
         platforms.forEach (platform => {
-            if(dog.position.x <= platform.position.x - dog.dimensions.width) {
-                dog.velocity.x *= -1
+            if(dog.position.x + dog.dimensions.width + dog.velocity.x >= platform.position.x &&
+                dog.position.x + dog.velocity.x <= platform.position.x + platform.dimensions.width) {
+                dog.velocity.x *= -1;
             }
         })
     })
 }
 
-export {handleCollisions, collectMice, enemyAnimation}
+function getHit () {
+    doggos.forEach(dog=> {
+        health.forEach((heart,i) => {
+            if (mitten.position.x < dog.position.x + dog.dimensions.width &&
+                mitten.position.x + mitten.dimensions.width > dog.position.x &&
+                mitten.position.y < dog.position.y + dog.dimensions.height &&
+                mitten.position.y + mitten.dimensions.height > dog.position.y &&
+                !mitten.gotHit) {
+                mitten.gotHit = true;
+                health.splice(i, 1);
+                setTimeout(()=>{
+                    mitten.gotHit = false;
+                },2000);
+            }
+        })
+    })
+}
+
+function finishLine () {
+    house.forEach( block => {
+        if (mitten.position.x + mitten.dimensions.width >= block .position.x) {
+            alert("Congrats! You made it back home.")
+            resetGame();
+        }
+    })
+}
+
+
+
+export {handleCollisions, collectMice, enemyAnimation, getHit, finishLine}
