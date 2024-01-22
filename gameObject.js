@@ -40,11 +40,18 @@ class gameObject {
         this.position.y = this.previousPosition.y;
     }
 
+    startPosition = {
+        "x": this.position.x,
+        "y": this.position.y
+    }
+
     constructor(width,height,x,y,velocity_x,velocity_y,acceleration_x,acceleration_y) {
         this.dimensions.width = width;
         this.dimensions.height = height;
         this.position.x = x;
         this.position.y = y;
+        this.startPosition.x = x;
+        this.startPosition.y = y;
         this.velocity.x = velocity_x;
         this.velocity.y = velocity_y;
         this.acceleration.x = acceleration_x;

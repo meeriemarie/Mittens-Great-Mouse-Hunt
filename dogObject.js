@@ -1,13 +1,22 @@
 import {ctx} from "./canvas.js";
-import {gameObject} from "./gameObject.js";
+import {ScrollableGameObject} from "./scrollableGameObject.js";
 
-class DogObject extends gameObject {
+class DogObject extends ScrollableGameObject {
     draw = () => {
         ctx.save();
         ctx.fillStyle = "#7C616C";
-        ctx.fillRect(this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
+        this.getCoords()
+        ctx.fillRect(this.ScrollableX, this.ScrollableY, this.dimensions.width, this.dimensions.height);
         ctx.restore();
     }
+
+    updateAnimation (DogObject) {
+        this.position.x += this.velocity.x
+        this.draw();
+    }
+
 }
+
+
 
 export {DogObject}

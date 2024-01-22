@@ -1,11 +1,12 @@
-import {gameObject} from "./gameObject.js";
+import {ScrollableGameObject} from "./scrollableGameObject.js";
 import {ctx} from "./canvas.js";
 
-class Obstacle extends gameObject {
+class Obstacle extends ScrollableGameObject {
     draw = () => {
         ctx.save();
         ctx.fillStyle = "#660000";
-        ctx.fillRect(this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
+        this.getCoords()
+        ctx.fillRect(this.ScrollableX, this.ScrollableY, this.dimensions.width, this.dimensions.height);
         ctx.restore();
     }
 

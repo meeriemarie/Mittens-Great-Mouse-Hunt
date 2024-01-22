@@ -2,3 +2,7 @@
     font-family: "EarlyGameBoy";
     src: url("./fonts/EarlyGameBoy.ttf") format("truetype");
 }
+
+body {
+    text-align: center;
+}
