@@ -4,5 +4,13 @@
 }
 
 body {
+    font-family: "EarlyGameBoy", sans-serif;
     text-align: center;
+}
+
+#start-screen {
+    width: 1600px;
+    height: 896px;
+    text-align: center;
+    background-color: mediumpurple;
 }
