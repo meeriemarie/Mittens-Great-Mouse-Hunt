@@ -15,5 +15,7 @@ let canvasBoundaries = {
         return canvas.width;
     }
 }
+ctx.width = 1600;
+ctx.height = 896;
 
 export {ctx, canvas, canvasBoundaries}

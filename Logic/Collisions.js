@@ -1,5 +1,5 @@
 import {mitten, platforms, mice, doggos, health, house} from "./script.js";
-import {scoreBoard} from "./scoreBoard.js";
+import {scoreBoard} from "../GameObjects/scoreBoard.js";
 import {resetGame} from "./logicLayer.js";
 
 function handleCollisions () {
@@ -15,6 +15,7 @@ function handleCollisions () {
                 mitten.velocity.y = 0;
                 mitten.position.y = platform.position.y - mitten.dimensions.height;
                 mitten.midair = false;
+                mitten.onBox = true;
             }
             // Bottom collision
             else if (
@@ -38,8 +39,14 @@ function handleCollisions () {
                 mitten.position.x = platform.position.x + platform.dimensions.width;
             }
         }
-
+        /*else if(mitten.velocity.y === 0 && mitten.position.y === platform.position.y - mitten.dimensions.height && mitten.onBox &&
+            mitten.position.x + mitten.dimensions.width < platform.position.x + platform.dimensions.width &&
+            mitten.position.x - mitten.dimensions.width > platform.position.x){
+            mitten.midair = true;
+            mitten.onBox = false;
+        }*/
     });
+
 }
 
 /*

@@ -1,9 +1,10 @@
-import {CatObject} from "./catObject.js"
-import {MouseObject} from "./mouseObject.js";
-import {DogObject} from "./dogObject.js";
-import {Obstacle} from "./obstacle.js";
-import {Heart} from "./healthBar.js";
-import {Goal} from "./goalObject.js";
+import {CatObject} from "../GameObjects/catObject.js"
+import {MouseObject} from "../GameObjects/mouseObject.js";
+import {DogObject} from "../GameObjects/dogObject.js";
+import {Obstacle} from "../GameObjects/obstacle.js";
+import {Heart} from "../GameObjects/healthBar.js";
+import {Goal} from "../GameObjects/goalObject.js";
+import {updateCamera} from "./camera.js";
 import {collisionDetection, updateGameObjects, renderGameObjects} from "./logicLayer.js"
 
 let mitten = new CatObject(16,16,0,208,0,0,0,0);
@@ -20,13 +21,13 @@ let house = [];
 
 
 const map = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,2,2,0,0,0,0,0,3,0,0,4,4],
-    [0,0,0,0,0,0,2,0,0,0,2,3,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,2,2,0,0,4,4],
-    [0,0,0,0,2,2,2,0,1,0,2,2,2,0,0,1,0,2,2,2,0,0,1,0,0,0,0,1,0,2,2,2,2,0,4,4]
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,2,2,0,0,0,0,0,3,0,0,4,4],
+    [0,0,0,0,0,0,0,0,0,2,0,0,0,2,3,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,2,2,0,0,4,4],
+    [0,0,0,0,0,0,0,2,2,2,0,1,0,2,2,2,0,0,1,0,2,2,2,0,0,1,0,0,0,0,1,0,2,2,2,2,0,4,4]
 ]
 
 map.forEach((row, i) => {
@@ -53,6 +54,7 @@ map.forEach((row, i) => {
 function gameLoop(){
     collisionDetection();
     updateGameObjects();
+    updateCamera(mitten);
     renderGameObjects();
     requestAnimationFrame(gameLoop);
 }
