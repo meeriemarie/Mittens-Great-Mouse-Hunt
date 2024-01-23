@@ -1,9 +1,10 @@
 import {collectMice, handleCollisions, enemyAnimation, getHit, finishLine} from "./Collisions.js";
-import {canvas, ctx} from "./canvas.js";
-import {scoreBoard} from "./scoreBoard.js";
+import {canvas, ctx} from "../canvas.js";
+import {scoreBoard} from "../GameObjects/scoreBoard.js";
 import {mice, mitten, platforms, doggos, health, house, map} from "./script.js";
-import {Heart} from "./healthBar.js";
-import {MouseObject} from "./mouseObject.js";
+import {Heart} from "../GameObjects/healthBar.js";
+import {MouseObject} from "../GameObjects/mouseObject.js";
+import {camera} from "./camera.js";
 
 function resetGame () {
     mitten.position.x = mitten.startPosition.x;
@@ -71,21 +72,21 @@ function updateGameObjects () {
 
 function renderGameObjects () {
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    mitten.draw();
+    mitten.draw(-camera.x, -camera.y);
     health.forEach(heart => {
         heart.draw();
     })
     doggos.forEach(dog => {
-        dog.draw();
+        dog.draw(-camera.x, -camera.y);
     })
     mice.forEach(mouse => {
-        mouse.draw();
+        mouse.draw(-camera.x, -camera.y);
     });
     platforms.forEach(platform => {
-        platform.draw();
+        platform.draw(-camera.x, -camera.y);
     });
     house.forEach(block => {
-        block.draw();
+        block.draw(-camera.x, -camera.y);
     })
     scoreBoard.drawScore();
 }
