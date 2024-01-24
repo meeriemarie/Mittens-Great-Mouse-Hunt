@@ -1,6 +1,5 @@
-import {mitten, platforms, mice, doggos, health, house} from "./script.js";
+import {mitten, platforms, mice, doggos, health} from "./script.js";
 import {scoreBoard} from "../GameObjects/scoreBoard.js";
-import {resetGame} from "./logicLayer.js";
 
 function handleCollisions () {
     platforms.forEach(platform => {
@@ -13,47 +12,29 @@ function handleCollisions () {
             // Top collision
             if (mitten.velocity.y > 0 && mitten.position.y + mitten.dimensions.height - mitten.velocity.y <= platform.position.y) {
                 mitten.velocity.y = 0;
-                mitten.position.y = platform.position.y - mitten.dimensions.height;
                 mitten.midair = false;
-                mitten.onBox = true;
+                mitten.position.y = platform.position.y - mitten.dimensions.height;
             }
             // Bottom collision
-            else if (
-                mitten.velocity.y < 0 &&
-                mitten.position.y - mitten.velocity.y >= platform.position.y + platform.dimensions.height
-            ) {
+            else if (mitten.velocity.y < 0 && mitten.position.y - mitten.velocity.y >= platform.position.y + platform.dimensions.height) {
                 mitten.velocity.y = 0;
                 mitten.position.y = platform.position.y + platform.dimensions.height;
             }
             // Left collision
             if (mitten.velocity.x > 0 && mitten.position.x + mitten.dimensions.width - mitten.velocity.x <= platform.position.x) {
                 mitten.velocity.x = 0;
-                mitten.position.x= platform.position.x - mitten.dimensions.width - mitten.velocity.x;
+                mitten.position.x = platform.position.x - mitten.dimensions.width - mitten.velocity.x;
             }
             // Right collision
-            else if (
-                mitten.velocity.x < 0 &&
-                mitten.position.x - mitten.velocity.x >= platform.position.x + platform.dimensions.width
-            ) {
+            else if (mitten.velocity.x < 0 && mitten.position.x - mitten.velocity.x >= platform.position.x + platform.dimensions.width) {
                 mitten.velocity.x = 0;
                 mitten.position.x = platform.position.x + platform.dimensions.width;
             }
         }
-        /*else if(mitten.velocity.y === 0 && mitten.position.y === platform.position.y - mitten.dimensions.height && mitten.onBox &&
-            mitten.position.x + mitten.dimensions.width < platform.position.x + platform.dimensions.width &&
-            mitten.position.x - mitten.dimensions.width > platform.position.x){
-            mitten.midair = true;
-            mitten.onBox = false;
-        }*/
     });
 
 }
 
-/*
-function checkIfMidAir(mittenX, platformX, platformWidth) {
-    return (mittenX < platformX || mittenX > (platformX + platformWidth));
-}
- */
 
 function collectMice () {
     mice.forEach((mouse, i) => {
@@ -96,15 +77,4 @@ function getHit () {
     })
 }
 
-function finishLine () {
-    house.forEach( block => {
-        if (mitten.position.x + mitten.dimensions.width >= block .position.x) {
-            alert("Congrats! You made it back home.")
-            resetGame();
-        }
-    })
-}
-
-
-
-export {handleCollisions, collectMice, enemyAnimation, getHit, finishLine}
+export {handleCollisions, collectMice, enemyAnimation, getHit}

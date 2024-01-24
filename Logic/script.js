@@ -6,7 +6,11 @@ import {Heart} from "../GameObjects/healthBar.js";
 import {Goal} from "../GameObjects/goalObject.js";
 import {updateCamera} from "./camera.js";
 import {collisionDetection, updateGameObjects, renderGameObjects} from "./logicLayer.js"
+import {scoreBoard} from "../GameObjects/scoreBoard.js";
+import {canvas} from "../canvas.js";
 
+// ----------------------------------------------
+// Creating Arrays and Map
 let mitten = new CatObject(16,16,0,208,0,0,0,0);
 let mice = [];
 let platforms = [];
@@ -16,18 +20,18 @@ let health = [
     new Heart(8,8,24,30,0,0,0,0),
     new Heart(8,8,40,30,0,0,0,0)
 ];
-let house = [];
+let house = new Goal(64,160,1184,64,0,0,0,0);
 
 
 
 const map = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,2,2,0,0,0,0,0,3,0,0,4,4],
-    [0,0,0,0,0,0,0,0,0,2,0,0,0,2,3,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,2,2,0,0,4,4],
-    [0,0,0,0,0,0,0,2,2,2,0,1,0,2,2,2,0,0,1,0,2,2,2,0,0,1,0,0,0,0,1,0,2,2,2,2,0,4,4]
+    [0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,4,4,0,0,0,0,0,3,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,2,0,0,0,2,3,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0],
+    [0,0,0,0,0,0,0,2,2,2,0,1,0,2,2,2,0,0,1,0,2,2,2,0,0,1,0,0,0,0,1,0,2,2,2,2,0,0,0]
 ]
 
 map.forEach((row, i) => {
@@ -43,15 +47,102 @@ map.forEach((row, i) => {
                 mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24,0,0,0,0))
                 break;
             case 4:
-                house.push(new Goal(32,32,32*j,32*i,0,0,0,0))
+                platforms.push(new Obstacle(32,16,32*j,32*i,0,0,0,0))
                 break;
         }
 
     })
 })
+// ----------------------------------------------
 
 
+
+// ----------------------------------------------
+//Logic for resetting and starting game
+//Event Listeners for Buttons
+/*
+const StartButton = document.querySelector(".startGame");
+const RestartButton = document.querySelectorAll(".restartGame")
+const MenuButton = document.querySelector(".menuBtn")
+const StartScreen = document.querySelector("#start-screen")
+const GameOverScreen = document.querySelector("#game-over")
+const FinishScreen = document.querySelector("#congrats")
+*/
+
+function resetGame () {
+    mitten.position.x = mitten.startPosition.x;
+    mitten.position.y = mitten.startPosition.y;
+    mice.forEach(mouse => {
+        mouse.position.x = mouse.startPosition.x;
+        mouse.position.y = mouse.startPosition.y;
+    });
+    doggos.forEach(dog => {
+        dog.position.x = dog.startPosition.x;
+        dog.position.y = dog.startPosition.y;
+    });
+
+    let _health = [
+        new Heart(8,8,8,30,0,0,0,0),
+        new Heart(8,8,24,30,0,0,0,0),
+        new Heart(8,8,40,30,0,0,0,0)
+    ];
+
+    for(let heart of _health){
+        health.push(heart)
+        heart.draw();
+
+    }
+
+    map.forEach((row, i) => {
+        row.forEach((number, j) => {
+            switch (number) {
+                case 3:
+                    mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24,0,0,0,0))
+                    break;
+            }
+        })
+    })
+
+    scoreBoard.score = 0;
+}
+/*
+StartButton.addEventListener("click", () => {
+    gameLoop();
+    StartScreen.style.display = 'none';
+    canvas.style.display = 'inline-block';
+})
+
+RestartButton.forEach(button) {
+    button.addEventListener()
+}
+ */
+
+function gameOver () {
+    if (health.length === 0) {
+        //GameOverScreen.style.display = 'inline-block';
+        //canvas.style.display = 'none';
+        alert("Oh nyo, you lost!");
+        resetGame();
+    }
+}
+
+function finishLine () {
+    if (mitten.position.x + mitten.dimensions.width >= house.position.x) {
+        //FinishScreen.style.display = 'inline-block';
+        //canvas.style.display = 'none';
+        alert('congrats! You made it back home');
+        resetGame();
+    }
+}
+
+
+// ----------------------------------------------
+
+
+// ----------------------------------------------
+// Game Loop and Controls
 function gameLoop(){
+    mitten.midair = true;
     collisionDetection();
     updateGameObjects();
     updateCamera(mitten);
@@ -93,10 +184,9 @@ function keyEventUp(eventInformation) {
 }
 
 
-
 addEventListener("keydown", keyEventDown);
 addEventListener("keyup", keyEventUp);
 console.log(health)
 requestAnimationFrame(gameLoop);
 
-export {platforms, mitten, mice, doggos, health, house, map}
+export {platforms, mitten, mice, doggos, health, house, map, gameLoop, gameOver, resetGame, finishLine}

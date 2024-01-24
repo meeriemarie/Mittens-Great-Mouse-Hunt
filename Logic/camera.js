@@ -20,4 +20,4 @@ function updateCamera(mitten) {
     camera.y = Math.max(0, Math.min(camera.y, worldHeight - camera.height));
 }
 
-export {updateCamera, camera}
+export {updateCamera, camera, worldWidth, worldHeight}
