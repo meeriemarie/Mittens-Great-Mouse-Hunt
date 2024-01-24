@@ -3,14 +3,118 @@
     src: url("./fonts/EarlyGameBoy.ttf") format("truetype");
 }
 
+#game-canvas {
+    display: inline-block;
+}
+
 body {
     font-family: "EarlyGameBoy", sans-serif;
     text-align: center;
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-bottom: 100px;
+    padding-top: 100px;
 }
 
-#start-screen {
+.buttons {
+    position: relative;
+    transform: translate(0%, 80%);
+}
+
+h2 {
+    font-size: 50px;
+}
+
+.header {
+    width: 800px;
+    height: auto;
+    position: relative;
+    transform: translate(50%, 100%);
+}
+
+.menu {
+    position: relative;
+    transform: translate(0%, 400%);
+}
+
+#start-screen{
+    font-family: "EarlyGameBoy", sans-serif;
     width: 1600px;
     height: 896px;
-    text-align: center;
-    background-color: mediumpurple;
+    background-color: #252B47;
+    color: whitesmoke;
+    display: none;
+}
+
+#game-over {
+    font-family: "EarlyGameBoy", sans-serif;
+    width: 1600px;
+    height: 896px;
+    background-color: #252B47;
+    color: whitesmoke;
+    display: none;
+}
+
+#congrats {
+    font-family: "EarlyGameBoy", sans-serif;
+    width: 1600px;
+    height: 896px;
+    background-color: #252B47;
+    color: whitesmoke;
+    display: none;
+
+}
+
+.text {
+    font-size: 40px;
+}
+
+.btn {
+    font-size: 25px;
+    color: white;
+    height: auto;
+    margin: 10px;
+    font-family: 'EarlyGameBoy', sans-serif;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 10px;
+    background: black;
+    z-index: 2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn:active {
+    top: 2px;
+}
+
+.btn::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: black;
+    z-index: -1;
+}
+
+.startGame::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: black;
+    z-index: -1;
 }

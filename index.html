@@ -6,13 +6,48 @@
     <link type="text/css" rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <canvas id="game-canvas" width="400" height="224" style="width: 1600px; height: 896px; image-rendering: pixelated; border: solid 1px black;"></canvas>
-    <section id="start-screen">
-        <h1>Mitten's Great Mouse Hunt</h1>
-        <button class="startGame" onclick="gameLoop()">Start Game</button>
-    </section>
-    <section id="congrats">Congrats</section>
-    <section id="game-over"></section>
-    <script type="module" src="Logic/script.js"></script>
+<canvas id="game-canvas" width="400" height="224" style="width: 1600px; height: 896px; image-rendering: pixelated; border: solid 1px black;"></canvas>
+<h1>Mitten's Great Mouse Hunt</h1>
+<section id="start-screen">
+    <div class="header">
+        <h2>Mitten's Great Mouse Hunt</h2>
+    </div>
+    <div class="menu">
+        <div class="startGame btn">Start Game</div>
+    </div>
+</section>
+
+<section id="congrats">
+    <div class="buttons">
+        <p class="text">Congrats! You made it back home.</p>
+        <p class="text"> Your Score:</p>
+        <p>
+        <div class="score-count"></div>
+        </p>
+        <p>
+        <div class="restartGame btn">Restart Game</div>
+        </p>
+        <p>
+        <div class="menuBtn btn">Back to Menu</div>
+        </p>
+    </div>
+</section>
+
+<section id="game-over">
+    <div class="buttons">
+        <p class="text">Oh nyo! You lost!</p>
+        <p class="text">Your Score:</p>
+        <p>
+        <div class="score-count"></div>
+        </p>
+        <p>
+        <div class="restartGame btn">Restart Game</div>
+        </p>
+        <p>
+        <div class="menuBtn btn">Back to Menu</div>
+        </p>
+    </div>
+</section>
+<script type="module" src="Logic/script.js"></script>
 </body>
 </html>
