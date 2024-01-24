@@ -1,11 +1,10 @@
 import {canvas} from "../canvas.js";
 import {gameObject} from "./gameObject.js";
+import {worldWidth,worldHeight} from "../Logic/camera.js";
 
 class CatObject extends gameObject {
-    isMoving = false;
+    isMoving = true;
     midair = false;
-    gotHit = false;
-    onBox = false;
 
     updatePosition (CatObject) {
         this.velocity.x += this.acceleration.x;
@@ -19,10 +18,22 @@ class CatObject extends gameObject {
 
 
         // Check for landing on the ground
-        if (this.position.y >= canvas.height - this.dimensions.height) {
+        if (this.position.y >= worldHeight - this.dimensions.height) {
             this.velocity.y = 0;
-            this.position.y = canvas.height - this.dimensions.height;
+            this.position.y = worldHeight - this.dimensions.height;
             this.midair = false;
+        }
+        if (this.position.y <= 0) {
+            this.velocity.y = 0;
+            this.midair = true
+        }
+        if (this.position.x <= 0) {
+            this.velocity.x = 0;
+            this.position.x = 0;
+        }
+        if (this.position.x + this.dimensions.width >= worldWidth) {
+            this.velocity.x = 0;
+            this.position.x = worldWidth - this.dimensions.width;
         }
 
         this.draw();

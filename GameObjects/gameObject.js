@@ -31,17 +31,6 @@ class gameObject {
         "y": 0
     }
 
-    storeCurrentPosition = () => {
-        //backup most recent position
-        this.previousPosition.x = this.position.x;
-        this.previousPosition.y = this.position.y;
-    }
-
-    restorePreviousPosition = () => {
-        this.position.x = this.previousPosition.x;
-        this.position.y = this.previousPosition.y;
-    }
-
     startPosition = {
         "x": this.position.x,
         "y": this.position.y
