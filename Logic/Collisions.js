@@ -62,7 +62,7 @@ function handleCollisions() {
     mitten.onPlatform &&
     !mitten.onPlatform.hasLeftObstacle &&
     mitten.position.y ===
-      mitten.onPlatform.position.y - mitten.dimensions.height &&
+      mitten.onPlatform.position.y - mitten.onPlatform.dimensions.height &&
     mitten.position.x + mitten.dimensions.width < mitten.onPlatform.position.x
   ) {
     console.log('falling off');
@@ -72,7 +72,7 @@ function handleCollisions() {
     mitten.onPlatform &&
     !mitten.onPlatform.hasRightObstacle &&
     mitten.position.y ===
-      mitten.onPlatform.position.y - mitten.dimensions.height &&
+      mitten.onPlatform.position.y - mitten.onPlatform.dimensions.height &&
     mitten.position.x + mitten.dimensions.width >
       mitten.onPlatform.position.x + mitten.onPlatform.dimensions.width
   ) {
