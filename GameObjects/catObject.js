@@ -1,4 +1,4 @@
-import {canvas} from "../canvas.js";
+import {canvas, ctx} from "../canvas.js";
 import {gameObject} from "./gameObject.js";
 import {worldWidth,worldHeight} from "../Logic/camera.js";
 
@@ -16,12 +16,21 @@ class CatObject extends gameObject {
         "y": .5
     }
 
-    constructor(width,height,x,y,velocity_x,velocity_y,acceleration_x,acceleration_y) {
+    constructor(imagePath,width,height,x,y,velocity_x,velocity_y,acceleration_x,acceleration_y) {
         super(width,height,x,y);
+        this.imageObject = new Image();
+        this.imageObject.addEventListener("load", this.draw)
+        this.imageObject.src = imagePath;
         this.velocity.x = velocity_x;
         this.velocity.y = velocity_y;
         this.acceleration.x = acceleration_x;
         this.acceleration.y = acceleration_y;
+    }
+
+    draw = (cx, cy) => {
+        ctx.save();
+        ctx.drawImage(this.imageObject,5,5,30,30,this.position.x + cx,this.position.y + cy,this.dimensions.width,this.dimensions.height);
+        ctx.restore();
     }
 
     updatePosition (CatObject) {

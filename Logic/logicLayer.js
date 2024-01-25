@@ -2,7 +2,14 @@ import {collectMice, handleCollisions, enemyAnimation, getHit} from "./Collision
 import {canvas, ctx} from "../canvas.js";
 import {scoreBoard} from "../GameObjects/scoreBoard.js";
 import {mice, mitten, platforms, doggos, health, house, gameOver, finishLine} from "./script.js";
-import {camera} from "./camera.js";
+import {camera, worldHeight, worldWidth} from "./camera.js";
+
+const background = new Image();
+background.src = "./images/Background.png";
+
+function drawBackground () {
+    ctx.drawImage(background,0,0,1165,600,0,0,canvas.width,canvas.height);
+}
 
 
 function collisionDetection () {
@@ -24,6 +31,7 @@ function updateGameObjects () {
 
 function renderGameObjects () {
     ctx.clearRect(0,0,canvas.width, canvas.height);
+    drawBackground();
     mitten.draw(-camera.x, -camera.y);
     health.forEach(heart => {
         heart.draw();

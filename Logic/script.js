@@ -7,11 +7,10 @@ import {Goal} from "../GameObjects/goalObject.js";
 import {updateCamera} from "./camera.js";
 import {collisionDetection, updateGameObjects, renderGameObjects} from "./logicLayer.js"
 import {scoreBoard} from "../GameObjects/scoreBoard.js";
-import {canvas} from "../canvas.js";
 
 // ----------------------------------------------
 // Creating Arrays and Map
-let mitten = new CatObject(16,16,0,208,0,0,0,0);
+let mitten = new CatObject("./images/MittenIdle.png",30,30,0,208,0,0,0,0);
 let mice = [];
 let platforms = [];
 let doggos = [];
@@ -38,7 +37,7 @@ map.forEach((row, i) => {
     row.forEach((number, j) => {
         switch (number) {
             case 1:
-                doggos.push(new DogObject(16,16,32*j + 8,32*i + 16,1,0))
+                doggos.push(new DogObject(60,60,32*j + 8,32*i + 16,1,0,"./images/DogRun.png",8,1))
                 break;
             case 2:
                 platforms.push(new Obstacle(32,32, 32*j, 32*i,"./images/Crate.png"))
@@ -141,6 +140,7 @@ function finishLine () {
 
 // ----------------------------------------------
 // Game Loop and Controls
+
 function gameLoop(){
     mitten.midair = true;
     collisionDetection();
