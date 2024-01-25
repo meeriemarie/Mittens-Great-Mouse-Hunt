@@ -19,12 +19,10 @@ function handleCollisions() {
         mitten.position.x - mitten.velocity.x <=
           platform.position.x + platform.dimensions.width
       ) {
-        console.log('top');
         mitten.velocity.y = 0;
         mitten.position.y = platform.position.y - mitten.dimensions.height;
         mitten.midair = false;
         mitten.onPlatform = platform;
-        console.log(platform);
       }
       // Bottom collision
       else if (
@@ -32,7 +30,6 @@ function handleCollisions() {
         mitten.position.y - mitten.velocity.y >=
           platform.position.y + platform.dimensions.height
       ) {
-        console.log('bottom');
         mitten.velocity.y = 0;
         mitten.position.y = platform.position.y + platform.dimensions.height;
       }
@@ -62,21 +59,19 @@ function handleCollisions() {
     mitten.onPlatform &&
     !mitten.onPlatform.hasLeftObstacle &&
     mitten.position.y ===
-      mitten.onPlatform.position.y - mitten.onPlatform.dimensions.height &&
+      mitten.onPlatform.position.y - mitten.dimensions.height &&
     mitten.position.x + mitten.dimensions.width < mitten.onPlatform.position.x
   ) {
-    console.log('falling off');
     mitten.midair = true;
     mitten.onPlatform = undefined;
   } else if (
     mitten.onPlatform &&
     !mitten.onPlatform.hasRightObstacle &&
     mitten.position.y ===
-      mitten.onPlatform.position.y - mitten.onPlatform.dimensions.height &&
+      mitten.onPlatform.position.y - mitten.dimensions.height &&
     mitten.position.x + mitten.dimensions.width >
       mitten.onPlatform.position.x + mitten.onPlatform.dimensions.width
   ) {
-    console.log('falling off');
     mitten.midair = true;
     mitten.onPlatform = undefined;
   }
