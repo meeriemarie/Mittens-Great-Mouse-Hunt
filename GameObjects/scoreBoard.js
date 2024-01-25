@@ -6,7 +6,7 @@ let scoreBoard = {
     drawScore() {
         ctx.save();
         ctx.font = "8px EarlyGameBoy";
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "#DEEBED";
         ctx.fillText(`Score: ${scoreBoard.score}`, 8, 20);
         ctx.restore();
     }

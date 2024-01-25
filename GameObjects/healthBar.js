@@ -3,12 +3,16 @@ import {gameObject} from "./gameObject.js";
 
 class Heart extends gameObject {
 
-    draw() {
-        console.log("trying to draw :(")
+    constructor(width,height,x,y,imagePath) {
+        super(width,height,x,y);
+        this.imageObject = new Image();
+        this.imageObject.addEventListener("load", this.draw)
+        this.imageObject.src = imagePath;
+    }
+
+    draw = () => {
         ctx.save();
-        //ctx.font = "8px EarlyGameBoy";
-        ctx.fillStyle = "#D8829D";
-        ctx.fillRect(this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
+        ctx.drawImage(this.imageObject,this.position.x,this.position.y,this.dimensions.width,this.dimensions.height);
         ctx.restore();
     }
 }

@@ -1,5 +1,6 @@
 import {mitten, platforms, mice, doggos, health} from "./script.js";
 import {scoreBoard} from "../GameObjects/scoreBoard.js";
+import {canvas, ctx} from "../canvas.js";
 
 function handleCollisions () {
     platforms.forEach(platform => {
@@ -49,14 +50,21 @@ function collectMice () {
 }
 
 function enemyAnimation () {
-    doggos.forEach (dog => {
-        platforms.forEach (platform => {
-            if(dog.position.x + dog.dimensions.width + dog.velocity.x >= platform.position.x &&
-                dog.position.x + dog.velocity.x <= platform.position.x + platform.dimensions.width) {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    doggos.forEach(dog => {
+        platforms.forEach(platform => {
+            if (dog.position.x + dog.dimensions.width + dog.velocity.x >= platform.position.x) {
+                ctx.save();
+                ctx.scale(-1,1);
+                dog.startAnimation(0,8);
                 dog.velocity.x *= -1;
+                ctx.restore();
+            } else if (dog.position.x + dog.velocity.x <= platform.position.x + platform.dimensions.width) {
+                dog.startAnimation(0,8)
+                dog.velocity.x *= 1;
             }
-        })
-    })
+        });
+    });
 }
 
 function getHit () {
