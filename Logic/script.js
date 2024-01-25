@@ -97,7 +97,8 @@ map.forEach((row, i) => {
           // has right neighbor?
           if (
             newPlatform.position.x + newPlatform.dimensions.width ===
-            pl.position.x
+              pl.position.x &&
+            newPlatform.position.y === pl.position.y
           ) {
             newPlatform.hasRightObstacle = platforms[
               idx
@@ -105,7 +106,10 @@ map.forEach((row, i) => {
           }
 
           // has left neighbor?
-          if (newPlatform.position.x === pl.position.x + pl.dimensions.width) {
+          if (
+            newPlatform.position.x === pl.position.x + pl.dimensions.width &&
+            newPlatform.position.y === pl.position.y
+          ) {
             newPlatform.hasLeftObstacle = platforms[
               idx
             ].hasRightObstacle = true;
