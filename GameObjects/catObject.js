@@ -6,6 +6,24 @@ class CatObject extends gameObject {
     isMoving = true;
     midair = false;
 
+    velocity = {
+        "x": 0,
+        "y": 0
+    }
+
+    acceleration = {
+        "x": .5,
+        "y": .5
+    }
+
+    constructor(width,height,x,y,velocity_x,velocity_y,acceleration_x,acceleration_y) {
+        super(width,height,x,y);
+        this.velocity.x = velocity_x;
+        this.velocity.y = velocity_y;
+        this.acceleration.x = acceleration_x;
+        this.acceleration.y = acceleration_y;
+    }
+
     updatePosition (CatObject) {
         this.velocity.x += this.acceleration.x;
         //Apply Gravity in midair

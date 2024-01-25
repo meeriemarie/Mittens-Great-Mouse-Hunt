@@ -16,16 +16,6 @@ class gameObject {
         "gravity": .5
     }
 
-    velocity = {
-        "x": 0,
-        "y": 0
-    }
-
-    acceleration = {
-        "x": .5,
-        "y": .5
-    }
-
     previousPosition = {
         "x": 0,
         "y": 0
@@ -36,17 +26,13 @@ class gameObject {
         "y": this.position.y
     }
 
-    constructor(width,height,x,y,velocity_x,velocity_y,acceleration_x,acceleration_y) {
+    constructor(width,height,x,y) {
         this.dimensions.width = width;
         this.dimensions.height = height;
         this.position.x = x;
         this.position.y = y;
         this.startPosition.x = x;
         this.startPosition.y = y;
-        this.velocity.x = velocity_x;
-        this.velocity.y = velocity_y;
-        this.acceleration.x = acceleration_x;
-        this.acceleration.y = acceleration_y;
     }
 
     draw(cx,cy) {
