@@ -70,7 +70,7 @@ map.forEach((row, i) => {
     row.forEach((number, j) => {
         switch (number) {
             case 1:
-                doggos.push(new DogObject(60, 60, 32 * j - 16, 32 * i - 16, 1, 0, "./images/DogRun.png", 8, 1))
+                doggos.push(new DogObject(40, 40, 32 * j - 16, 32 * i - 16, 1, 0, "./images/DogRun.png", 8, 1))
                 break;
             case 2:
                 const newPlatform = new Obstacle(
@@ -159,28 +159,6 @@ function resetGame() {
       }
     });
   });
-
-     _health = [
-        new Heart(8,8,8,30, "./images/Heart.png"),
-        new Heart(8,8,24,30, "./images/Heart.png"),
-        new Heart(8,8,40,30, "./images/Heart.png")
-    ];
-
-    for(let heart of _health){
-        health.push(heart)
-        heart.draw();
-
-    }
-
-    map.forEach((row, i) => {
-        row.forEach((number, j) => {
-            switch (number) {
-                case 3:
-                    mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24,"./images/Mouse.png"))
-                    break;
-            }
-        })
-    })
 
     scoreBoard.score = 0;
 }
