@@ -16,11 +16,11 @@ let mice = [];
 let platforms = [];
 let doggos = [];
 let health = [
-    new Heart(8,8,8,30,0,0,0,0),
-    new Heart(8,8,24,30,0,0,0,0),
-    new Heart(8,8,40,30,0,0,0,0)
+    new Heart(8,8,8,30),
+    new Heart(8,8,24,30),
+    new Heart(8,8,40,30)
 ];
-let house = new Goal(64,160,1184,64,0,0,0,0);
+let house = new Goal(64,160,1184,64);
 
 
 
@@ -38,16 +38,16 @@ map.forEach((row, i) => {
     row.forEach((number, j) => {
         switch (number) {
             case 1:
-                doggos.push(new DogObject(16,16,32*j + 8,32*i + 16,1,0,0,0))
+                doggos.push(new DogObject(16,16,32*j + 8,32*i + 16,1,0))
                 break;
             case 2:
-                platforms.push(new Obstacle(32,32, 32*j, 32*i,0,0,0,0))
+                platforms.push(new Obstacle(32,32, 32*j, 32*i,"./images/Crate.png"))
                 break;
             case 3:
-                mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24,0,0,0,0))
+                mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24))
                 break;
             case 4:
-                platforms.push(new Obstacle(32,16,32*j,32*i,0,0,0,0))
+                platforms.push(new Obstacle(32,16,32*j,32*i,"./images/Branch.png"))
                 break;
         }
 
@@ -82,9 +82,9 @@ function resetGame () {
     });
 
     let _health = [
-        new Heart(8,8,8,30,0,0,0,0),
-        new Heart(8,8,24,30,0,0,0,0),
-        new Heart(8,8,40,30,0,0,0,0)
+        new Heart(8,8,8,30),
+        new Heart(8,8,24,30),
+        new Heart(8,8,40,30)
     ];
 
     for(let heart of _health){
@@ -97,7 +97,7 @@ function resetGame () {
         row.forEach((number, j) => {
             switch (number) {
                 case 3:
-                    mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24,0,0,0,0))
+                    mice.push(new MouseObject(8,8,32 * j + 12,32 * i + 24))
                     break;
             }
         })
