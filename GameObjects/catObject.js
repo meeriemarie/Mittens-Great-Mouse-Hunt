@@ -28,7 +28,7 @@ class CatObject extends gameObject {
     y: 0.5,
   };
 
-  cropNr = 5;
+  cropNr = 10;
 
   offsetNr = 10;
 
@@ -36,8 +36,8 @@ class CatObject extends gameObject {
     top: this.position.y + this.offsetNr,
     bottom: this.position.y + this.spriteHeight - this.offsetNr,
     left: this.position.x + this.offsetNr,
-    right: this.position.x + this.spriteWidth - this.offsetNr
-  }
+    right: this.position.x + this.spriteWidth - this.offsetNr,
+  };
 
   constructor(
     imagePath,
@@ -64,23 +64,51 @@ class CatObject extends gameObject {
     this.acceleration.y = acceleration_y;
     this.spriteWidth = width;
     this.spriteHeight = height;
-    this.sx = (this.frameIndex * this.spriteWidth % this.imageObject.width) + this.cropNr;
-    this.sy = (Math.floor(this.frameIndex * this.spriteWidth / this.imageObject.width) * this.spriteHeight  + this.cropNr);
+    this.sx =
+      ((this.frameIndex * this.spriteWidth) % this.imageObject.width) *
+        this.spriteWidth +
+      this.cropNr;
+    this.sy =
+      ((this.frameIndex * this.spriteWidth) / this.imageObject.width) *
+        this.spriteHeight +
+      this.cropNr;
     this.scaleFactor = scaleFactor;
   }
 
   draw = (cx, cy) => {
     ctx.save();
     ctx.drawImage(
-        this.flipped ? this.imageObjectFlipped : this.imageObject,
-        this.sx,
-        this.sy,
-        this.spriteWidth,
-        this.spriteHeight,
-        this.position.x + cx,
-        this.position.y + cy,
-        this.dimensions.width * this.scaleFactor,
-        this.dimensions.height * this.scaleFactor
+      this.flipped ? this.imageObjectFlipped : this.imageObject,
+      this.sx,
+      this.sy,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.position.x + cx,
+      this.position.y + cy,
+      this.dimensions.width * this.scaleFactor,
+      this.dimensions.height * this.scaleFactor
+    );
+    ctx.beginPath();
+    ctx.rect(
+      this.position.x + cx,
+      this.position.y + cy,
+      this.dimensions.width * this.scaleFactor,
+      this.dimensions.height * this.scaleFactor
+    );
+    ctx.stroke();
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.position.x + cx, this.position.y + cy, 1, 1);
+    ctx.fillRect(
+      this.position.x + cx + this.dimensions.width * this.scaleFactor,
+      this.position.y + cy,
+      1,
+      1
+    );
+    ctx.fillRect(
+      this.position.x + cx,
+      this.position.y + cy + this.dimensions.height * this.scaleFactor,
+      1,
+      1
     );
     this.animate();
   };
@@ -116,11 +144,15 @@ class CatObject extends gameObject {
   animate() {
     if (this.elapsed > 1000 / this.fps) {
       this.then = this.now - (this.elapsed % (1000 / this.fps));
-      this.flipped ? this.frameIndex-- :  this.frameIndex++ ;
-      if (this.frameIndex >= this.totalFrames && !this.flipped) this.frameIndex = 0;
+      this.flipped ? this.frameIndex-- : this.frameIndex++;
+      if (this.frameIndex >= this.totalFrames && !this.flipped)
+        this.frameIndex = 0;
       if (this.frameIndex <= 0 && this.flipped) this.frameIndex = 7;
-      this.sx = this.frameIndex * this.spriteWidth % this.imageObject.width;
-      this.sy = Math.floor(this.frameIndex * this.spriteWidth / this.imageObject.width) * this.spriteHeight;
+      this.sx = (this.frameIndex * this.spriteWidth) % this.imageObject.width;
+      this.sy =
+        Math.floor(
+          (this.frameIndex * this.spriteWidth) / this.imageObject.width
+        ) * this.spriteHeight;
     }
   }
 }
