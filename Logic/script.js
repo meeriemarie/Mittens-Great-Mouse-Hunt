@@ -11,6 +11,7 @@ import {
   renderGameObjects,
 } from './logicLayer.js';
 import { scoreBoard } from '../GameObjects/scoreBoard.js';
+import {canvas} from "../canvas.js";
 
 // ----------------------------------------------
 // Creating Arrays and Map
@@ -159,14 +160,7 @@ map.forEach((row, i) => {
 // ----------------------------------------------
 //Logic for resetting and starting game
 //Event Listeners for Buttons
-/*
-const StartButton = document.querySelector(".startGame");
-const RestartButton = document.querySelectorAll(".restartGame")
-const MenuButton = document.querySelector(".menuBtn")
-const StartScreen = document.querySelector("#start-screen")
-const GameOverScreen = document.querySelector("#game-over")
-const FinishScreen = document.querySelector("#congrats")
-*/
+
 
 function resetGame() {
   mitten.position.x = mitten.startPosition.x;
@@ -180,6 +174,7 @@ function resetGame() {
     dog.position.y = dog.startPosition.y;
   });
 
+  health = [];
   let _health = [
     new Heart(8, 8, 8, 30, './images/Heart.png'),
     new Heart(8, 8, 24, 30, './images/Heart.png'),
@@ -211,33 +206,53 @@ function resetGame() {
 
   scoreBoard.score = 0;
 }
-/*
+
+const StartButton = document.querySelector(".startGame");
+const RestartButton = document.querySelectorAll(".restartGame")
+const MenuButton = document.querySelectorAll(".menuBtn")
+const StartScreen = document.getElementById("start-screen")
+const GameOverScreen = document.getElementById("game-over")
+const FinishScreen = document.getElementById("congrats")
+
 StartButton.addEventListener("click", () => {
-    gameLoop();
+    //gameLoop();
     StartScreen.style.display = 'none';
     canvas.style.display = 'inline-block';
 })
 
-RestartButton.forEach(button) {
-    button.addEventListener()
-}
- */
+MenuButton.forEach((el) => {
+el.addEventListener("click", () => {
+    GameOverScreen.style.display = 'none';
+    FinishScreen.style.display = 'none';
+    StartScreen.style.display = 'inline-block';
+  })
+});
+
+RestartButton.forEach((el) => {
+  el.addEventListener("click", () => {
+    resetGame();
+    GameOverScreen.style.display = 'none';
+    FinishScreen.style.display = 'none';
+    canvas.style.display = 'inline-block';
+  })
+});
+
+
 
 function gameOver() {
   if (health.length === 0) {
-    //GameOverScreen.style.display = 'inline-block';
-    //canvas.style.display = 'none';
-    alert('Oh nyo, you lost!');
+    GameOverScreen.style.display = 'inline-block';
+    canvas.style.display = 'none';
+    //alert('Oh nyo, you lost!');
     resetGame();
   }
 }
 
 function finishLine() {
   if (mitten.position.x + mitten.dimensions.width >= house.position.x) {
-    //FinishScreen.style.display = 'inline-block';
-    //canvas.style.display = 'none';
-    alert('congrats! You made it back home');
-    resetGame();
+    FinishScreen.style.display = 'inline-block';
+    canvas.style.display = 'none';
+    //alert('congrats! You made it back home');
   }
 }
 

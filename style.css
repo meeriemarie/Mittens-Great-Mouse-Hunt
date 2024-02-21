@@ -4,7 +4,7 @@
 }
 
 #game-canvas {
-    display: inline-block;
+    display: none;
 }
 
 body {
@@ -43,7 +43,7 @@ h2 {
     height: 896px;
     background-color: #252B47;
     color: whitesmoke;
-    display: none;
+    display: inline-block;
 }
 
 #game-over {
