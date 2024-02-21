@@ -201,8 +201,8 @@ class CatObject extends gameObject {
   }
 
   animate(dI, dIF, totalFrames) {
-    if (this.elapsed > 1000 / this.fps) {
-      this.then = this.now - (this.elapsed % (1000 / this.fps));
+    if (this.elapsed > 2000 / this.fps) {
+      this.then = this.now - (this.elapsed % (2000 / this.fps));
       this.flipped ? this.frameIndex-- : this.frameIndex++;
       if (this.frameIndex >= totalFrames && !this.flipped) this.frameIndex = 0;
       if (this.frameIndex <= 0 && this.flipped)
