@@ -154,7 +154,8 @@ function getHit() {
     };
     if (!mitten.gotHit && doesIntersect(mittenPos, dogPos)) {
       mitten.gotHit = true;
-      health.splice(health.length - 1, 1);
+      console.log('hit');
+      // health.splice(health.length - 1, 1);
       setTimeout(() => {
         mitten.gotHit = false;
       }, 2000);

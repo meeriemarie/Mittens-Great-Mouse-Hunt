@@ -24,10 +24,20 @@ class DogObject extends gameObject {
     top: this.position.y + this.offsetNr,
     bottom: this.position.y + this.spriteHeight - this.offsetNr,
     left: this.position.x + this.offsetNr,
-    right: this.position.x + this.spriteWidth - this.offsetNr
-  }
+    right: this.position.x + this.spriteWidth - this.offsetNr,
+  };
 
-  constructor(width, height, x, y, velocity_x, velocity_y,imagePath,imagePathFlipped,scaleFactor) {
+  constructor(
+    width,
+    height,
+    x,
+    y,
+    velocity_x,
+    velocity_y,
+    imagePath,
+    imagePathFlipped,
+    scaleFactor
+  ) {
     super(width, height, x, y);
     this.velocity.x = velocity_x;
     this.velocity.y = velocity_y;
@@ -37,37 +47,43 @@ class DogObject extends gameObject {
     this.imageObjectFlipped.src = imagePathFlipped;
     this.spriteWidth = width;
     this.spriteHeight = height;
-    this.sx = (this.frameIndex * this.spriteWidth % this.imageObject.width);
-    this.sy = (Math.floor(this.frameIndex * this.spriteWidth / this.imageObject.width) * this.spriteHeight);
+    this.sx = (this.frameIndex * this.spriteWidth) % this.imageObject.width;
+    this.sy =
+      Math.floor(
+        (this.frameIndex * this.spriteWidth) / this.imageObject.width
+      ) * this.spriteHeight;
     this.scaleFactor = scaleFactor;
   }
 
-
-
-  draw(cx=0,cy=0) {
+  draw(cx = 0, cy = 0) {
     this.now = Date.now();
     this.elapsed = this.now - this.then;
     ctx.drawImage(
-        this.flipped ? this.imageObjectFlipped : this.imageObject,
-        this.sx,
-        this.sy,
-        this.spriteWidth,
-        this.spriteHeight,
-        this.position.x + cx,
-        this.position.y + cy,
-        this.spriteWidth * this.scaleFactor,
-        this.spriteHeight * this.scaleFactor);
+      this.flipped ? this.imageObjectFlipped : this.imageObject,
+      this.sx,
+      this.sy,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.position.x + cx,
+      this.position.y + cy,
+      this.spriteWidth * this.scaleFactor,
+      this.spriteHeight * this.scaleFactor
+    );
     this.animate();
   }
 
   animate() {
     if (this.elapsed > 1000 / this.fps) {
       this.then = this.now - (this.elapsed % (1000 / this.fps));
-      this.flipped ? this.frameIndex-- :  this.frameIndex++ ;
-      if (this.frameIndex >= this.totalFrames && !this.flipped) this.frameIndex = 0;
+      this.flipped ? this.frameIndex-- : this.frameIndex++;
+      if (this.frameIndex >= this.totalFrames && !this.flipped)
+        this.frameIndex = 0;
       if (this.frameIndex <= 0 && this.flipped) this.frameIndex = 7;
-      this.sx = this.frameIndex * this.spriteWidth % this.imageObject.width;
-      this.sy = Math.floor(this.frameIndex * this.spriteWidth / this.imageObject.width) * this.spriteHeight;
+      this.sx = (this.frameIndex * this.spriteWidth) % this.imageObject.width;
+      this.sy =
+        Math.floor(
+          (this.frameIndex * this.spriteWidth) / this.imageObject.width
+        ) * this.spriteHeight;
     }
   }
 

@@ -3,12 +3,11 @@ import { gameObject } from './gameObject.js';
 import { worldWidth, worldHeight } from '../Logic/camera.js';
 
 class CatObject extends gameObject {
-  isMoving = true;
+  isMoving = false;
   onPlatform = undefined;
   spriteWidth = 0;
   spriteHeight = 0;
   frameIndex = 0;
-  totalFrames = 8;
   fps = 10;
   then = Date.now();
   now = Date.now();
@@ -17,6 +16,7 @@ class CatObject extends gameObject {
   rightObstacle = null;
   flipped = false;
   scaleFactor = 0;
+  gotHit = false;
 
   velocity = {
     x: 0,
@@ -42,6 +42,17 @@ class CatObject extends gameObject {
   constructor(
     imagePath,
     imagePathFlipped,
+    imagePathIdle,
+    imagePathIdleFlipped,
+    imagePathHurt,
+    imagePathHurtFlipped,
+    numFrameHurt,
+    imagePathJump,
+    imagePathJumpFlipped,
+    numFrameJump,
+    imagePathLand,
+    imagePathLandFlipped,
+    numFrameLand,
     width,
     height,
     x,
@@ -58,6 +69,27 @@ class CatObject extends gameObject {
     this.imageObject.src = imagePath;
     this.imageObjectFlipped = new Image();
     this.imageObjectFlipped.src = imagePathFlipped;
+    this.imagePathHurt = new Image();
+    this.imagePathHurt.src = imagePathHurt;
+    this.imagePathHurtFlipped = new Image();
+    this.imagePathHurtFlipped.src = imagePathHurtFlipped;
+    this.imageObjectIdle = new Image();
+    this.imageObjectIdle.src = imagePathIdle;
+    this.imageObjectIdleFlipped = new Image();
+    this.imageObjectIdleFlipped.src = imagePathIdleFlipped;
+    this.numFrameHurt = numFrameHurt;
+
+    this.imageObjectJump = new Image();
+    this.imageObjectJump.src = imagePathJump;
+    this.imageObjectJumpFlipped = new Image();
+    this.imageObjectJumpFlipped.src = imagePathJumpFlipped;
+    this.numFrameJump = numFrameJump;
+    this.imageObjectLand = new Image();
+    this.imageObjectLand.src = imagePathLand;
+    this.imageObjectLandFlipped = new Image();
+    this.imageObjectLandFlipped.src = imagePathLandFlipped;
+    this.numFrameLand = numFrameLand;
+
     this.velocity.x = velocity_x;
     this.velocity.y = velocity_y;
     this.acceleration.x = acceleration_x;
@@ -76,9 +108,37 @@ class CatObject extends gameObject {
   }
 
   draw = (cx, cy) => {
+    this.now = Date.now();
+    this.elapsed = this.now - this.then;
     ctx.save();
+    let drawnImage = this.imageObject;
+    let drawnImageFlipped = this.imageObjectFlipped;
+    let totalFrames = 8;
+    if (this.gotHit) {
+      drawnImage = this.imagePathHurt;
+      drawnImageFlipped = this.imagePathHurtFlipped;
+      totalFrames = this.numFrameHurt;
+    } else if (!this.isMoving) {
+      drawnImage = this.imageObjectIdle;
+      drawnImageFlipped = this.imageObjectIdleFlipped;
+    }
+    if (this.midair) {
+      if (this.velocity.y > 0) {
+        drawnImage = this.imageObjectLand;
+        drawnImageFlipped = this.imageObjectLandFlipped;
+        totalFrames = 2;
+        this.frameIndex = 0;
+      } else if (this.velocity.y < 0) {
+        drawnImage = this.imageObjectJump;
+        drawnImageFlipped = this.imageObjectJumpFlipped;
+        totalFrames = 4;
+        this.frameIndex = 0;
+      }
+    }
+    this.animate(drawnImage, drawnImageFlipped, totalFrames);
+
     ctx.drawImage(
-      this.flipped ? this.imageObjectFlipped : this.imageObject,
+      this.flipped ? drawnImageFlipped : drawnImage,
       this.sx,
       this.sy,
       this.spriteWidth,
@@ -110,7 +170,6 @@ class CatObject extends gameObject {
       1,
       1
     );
-    this.animate();
   };
 
   updatePosition(CatObject) {
@@ -141,18 +200,18 @@ class CatObject extends gameObject {
     this.draw();
   }
 
-  animate() {
+  animate(dI, dIF, totalFrames) {
     if (this.elapsed > 1000 / this.fps) {
       this.then = this.now - (this.elapsed % (1000 / this.fps));
       this.flipped ? this.frameIndex-- : this.frameIndex++;
-      if (this.frameIndex >= this.totalFrames && !this.flipped)
-        this.frameIndex = 0;
-      if (this.frameIndex <= 0 && this.flipped) this.frameIndex = 7;
-      this.sx = (this.frameIndex * this.spriteWidth) % this.imageObject.width;
+      if (this.frameIndex >= totalFrames && !this.flipped) this.frameIndex = 0;
+      if (this.frameIndex <= 0 && this.flipped)
+        this.frameIndex = totalFrames - 1;
+      const sW = dI.width / totalFrames;
+      this.sx = ((this.frameIndex * sW) % dI.width) + this.cropNr;
       this.sy =
-        Math.floor(
-          (this.frameIndex * this.spriteWidth) / this.imageObject.width
-        ) * this.spriteHeight;
+        Math.floor((this.frameIndex * sW) / dI.width) * this.spriteHeight +
+        this.cropNr;
     }
   }
 }
