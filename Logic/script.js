@@ -285,6 +285,7 @@ function keyEventDown(eventInformation) {
       if (!mitten.midair) {
         mitten.velocity.y = -9;
         mitten.midair = true;
+        mitten.frameIndex = 0;
       }
       break;
   }

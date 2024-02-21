@@ -113,6 +113,7 @@ class CatObject extends gameObject {
     ctx.save();
     let drawnImage = this.imageObject;
     let drawnImageFlipped = this.imageObjectFlipped;
+
     let totalFrames = 8;
     if (this.gotHit) {
       drawnImage = this.imagePathHurt;
@@ -123,16 +124,14 @@ class CatObject extends gameObject {
       drawnImageFlipped = this.imageObjectIdleFlipped;
     }
     if (this.midair) {
-      if (this.velocity.y > 0) {
+      if (this.velocity.y >= 0) {
         drawnImage = this.imageObjectLand;
         drawnImageFlipped = this.imageObjectLandFlipped;
-        totalFrames = 2;
-        this.frameIndex = 0;
-      } else if (this.velocity.y < 0) {
+        totalFrames = this.numFrameLand;
+      } else {
         drawnImage = this.imageObjectJump;
         drawnImageFlipped = this.imageObjectJumpFlipped;
-        totalFrames = 4;
-        this.frameIndex = 0;
+        totalFrames = this.numFrameJump;
       }
     }
     this.animate(drawnImage, drawnImageFlipped, totalFrames);
@@ -174,11 +173,12 @@ class CatObject extends gameObject {
 
   updatePosition(CatObject) {
     this.velocity.x += this.acceleration.x;
+    const oldV = this.velocity.y;
     //Apply Gravity in midair
     if (this.midair) {
       this.velocity.y += this.forces.gravity;
     }
-
+    if (oldV < 0 && this.velocity.y >= 0) this.frameIndex = 0;
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
@@ -196,22 +196,19 @@ class CatObject extends gameObject {
       this.velocity.x = 0;
       this.position.x = worldWidth - this.dimensions.width;
     }
-
-    this.draw();
   }
 
   animate(dI, dIF, totalFrames) {
     if (this.elapsed > 2000 / this.fps) {
       this.then = this.now - (this.elapsed % (2000 / this.fps));
-      this.flipped ? this.frameIndex-- : this.frameIndex++;
-      if (this.frameIndex >= totalFrames && !this.flipped) this.frameIndex = 0;
-      if (this.frameIndex <= 0 && this.flipped)
-        this.frameIndex = totalFrames - 1;
+      if (this.frameIndex > totalFrames - 1) this.frameIndex = 0;
+      if (this.frameIndex < 0) this.frameIndex = totalFrames - 1;
       const sW = dI.width / totalFrames;
       this.sx = ((this.frameIndex * sW) % dI.width) + this.cropNr;
       this.sy =
         Math.floor((this.frameIndex * sW) / dI.width) * this.spriteHeight +
         this.cropNr;
+      this.flipped ? this.frameIndex-- : this.frameIndex++;
     }
   }
 }
