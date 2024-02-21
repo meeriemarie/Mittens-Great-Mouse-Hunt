@@ -55,6 +55,17 @@ function handleCollisions() {
         mitten.position.x = platform.position.x + platform.dimensions.width;
       }
     }
+
+    // Check whether the player character is moving across the platform to the neighboring one
+    // If yes set the onPlatform property to the property where the player is currently standing
+    if (
+      mitten.onPlatform &&
+      mitten.position.y === platform.position.y - mitten.dimensions.height &&
+      mitten.position.x + mitten.dimensions.width >= platform.position.x &&
+      mitten.position.x <= platform.position.x + platform.dimensions.width
+    ) {
+      mitten.onPlatform = platform;
+    }
   });
 
   if (
@@ -71,7 +82,7 @@ function handleCollisions() {
     !mitten.onPlatform.hasRightObstacle &&
     mitten.position.y ===
       mitten.onPlatform.position.y - mitten.dimensions.height &&
-    mitten.position.x + mitten.dimensions.width >
+    mitten.position.x >
       mitten.onPlatform.position.x + mitten.onPlatform.dimensions.width
   ) {
     mitten.midair = true;
