@@ -185,7 +185,7 @@ function resetGame() {
     health.push(heart);
     heart.draw();
   }
-
+  mice = [];
   map.forEach((row, i) => {
     row.forEach((number, j) => {
       switch (number) {
@@ -210,6 +210,7 @@ function resetGame() {
 const StartButton = document.querySelector(".startGame");
 const RestartButton = document.querySelectorAll(".restartGame")
 const MenuButton = document.querySelectorAll(".menuBtn")
+const score = document.querySelectorAll(".score-count")
 const StartScreen = document.getElementById("start-screen")
 const GameOverScreen = document.getElementById("game-over")
 const FinishScreen = document.getElementById("congrats")
@@ -243,6 +244,9 @@ function gameOver() {
   if (health.length === 0) {
     GameOverScreen.style.display = 'inline-block';
     canvas.style.display = 'none';
+    score.forEach((nr) => {
+      nr.innerHTML = scoreBoard.score;
+    })
     //alert('Oh nyo, you lost!');
     resetGame();
   }
@@ -252,7 +256,11 @@ function finishLine() {
   if (mitten.position.x + mitten.dimensions.width >= house.position.x) {
     FinishScreen.style.display = 'inline-block';
     canvas.style.display = 'none';
+    score.forEach((nr) => {
+      nr.innerHTML = scoreBoard.score;
+    })
     //alert('congrats! You made it back home');
+    resetGame();
   }
 }
 
