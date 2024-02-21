@@ -46,7 +46,7 @@ let health = [
   new Heart(8, 8, 24, 30, './images/Heart.png'),
   new Heart(8, 8, 40, 30, './images/Heart.png'),
 ];
-let house = new Goal(64, 160, 1184, 64);
+let house = new Goal(64, 160, 1184, 64, './images/MittenHouse.png');
 
 const map = [
   [
