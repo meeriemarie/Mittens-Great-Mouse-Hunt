@@ -47,11 +47,14 @@ class DogObject extends gameObject {
     this.imageObjectFlipped.src = imagePathFlipped;
     this.spriteWidth = width;
     this.spriteHeight = height;
+    this.yCrop = width - height;
     this.sx = (this.frameIndex * this.spriteWidth) % this.imageObject.width;
     this.sy =
       Math.floor(
         (this.frameIndex * this.spriteWidth) / this.imageObject.width
-      ) * this.spriteHeight;
+      ) *
+        this.spriteHeight +
+      this.yCrop;
     this.scaleFactor = scaleFactor;
   }
 
@@ -83,7 +86,9 @@ class DogObject extends gameObject {
       this.sy =
         Math.floor(
           (this.frameIndex * this.spriteWidth) / this.imageObject.width
-        ) * this.spriteHeight;
+        ) *
+          this.spriteHeight +
+        this.yCrop;
     }
   }
 

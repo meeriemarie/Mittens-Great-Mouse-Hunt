@@ -11,7 +11,7 @@ import {
   renderGameObjects,
 } from './logicLayer.js';
 import { scoreBoard } from '../GameObjects/scoreBoard.js';
-import {canvas} from "../canvas.js";
+import { canvas } from '../canvas.js';
 
 // ----------------------------------------------
 // Creating Arrays and Map
@@ -87,9 +87,9 @@ map.forEach((row, i) => {
       case 1:
         const newDog = new DogObject(
           60,
-          60,
+          30,
           32 * j - 16,
-          32 * i - 24,
+          32 * i,
           1,
           0,
           './images/DogRun.png',
@@ -161,7 +161,6 @@ map.forEach((row, i) => {
 //Logic for resetting and starting game
 //Event Listeners for Buttons
 
-
 function resetGame() {
   mitten.position.x = mitten.startPosition.x;
   mitten.position.y = mitten.startPosition.y;
@@ -207,37 +206,35 @@ function resetGame() {
   scoreBoard.score = 0;
 }
 
-const StartButton = document.querySelector(".startGame");
-const RestartButton = document.querySelectorAll(".restartGame")
-const MenuButton = document.querySelectorAll(".menuBtn")
-const StartScreen = document.getElementById("start-screen")
-const GameOverScreen = document.getElementById("game-over")
-const FinishScreen = document.getElementById("congrats")
+const StartButton = document.querySelector('.startGame');
+const RestartButton = document.querySelectorAll('.restartGame');
+const MenuButton = document.querySelectorAll('.menuBtn');
+const StartScreen = document.getElementById('start-screen');
+const GameOverScreen = document.getElementById('game-over');
+const FinishScreen = document.getElementById('congrats');
 
-StartButton.addEventListener("click", () => {
-    //gameLoop();
-    StartScreen.style.display = 'none';
-    canvas.style.display = 'inline-block';
-})
+StartButton.addEventListener('click', () => {
+  //gameLoop();
+  StartScreen.style.display = 'none';
+  canvas.style.display = 'inline-block';
+});
 
 MenuButton.forEach((el) => {
-el.addEventListener("click", () => {
+  el.addEventListener('click', () => {
     GameOverScreen.style.display = 'none';
     FinishScreen.style.display = 'none';
     StartScreen.style.display = 'inline-block';
-  })
+  });
 });
 
 RestartButton.forEach((el) => {
-  el.addEventListener("click", () => {
+  el.addEventListener('click', () => {
     resetGame();
     GameOverScreen.style.display = 'none';
     FinishScreen.style.display = 'none';
     canvas.style.display = 'inline-block';
-  })
+  });
 });
-
-
 
 function gameOver() {
   if (health.length === 0) {
