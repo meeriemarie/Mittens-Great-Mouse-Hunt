@@ -147,28 +147,6 @@ class CatObject extends gameObject {
       this.dimensions.width * this.scaleFactor,
       this.dimensions.height * this.scaleFactor
     );
-    ctx.beginPath();
-    ctx.rect(
-      this.position.x + cx,
-      this.position.y + cy,
-      this.dimensions.width * this.scaleFactor,
-      this.dimensions.height * this.scaleFactor
-    );
-    ctx.stroke();
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.position.x + cx, this.position.y + cy, 1, 1);
-    ctx.fillRect(
-      this.position.x + cx + this.dimensions.width * this.scaleFactor,
-      this.position.y + cy,
-      1,
-      1
-    );
-    ctx.fillRect(
-      this.position.x + cx,
-      this.position.y + cy + this.dimensions.height * this.scaleFactor,
-      1,
-      1
-    );
   };
 
   updatePosition(CatObject) {
