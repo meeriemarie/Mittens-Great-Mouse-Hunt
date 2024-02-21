@@ -16,7 +16,7 @@ function collisionDetection () {
     finishLine();
     gameOver();
     handleCollisions();
-    enemyAnimation();
+    //enemyAnimation();
     getHit();
     collectMice();
 }
@@ -24,7 +24,13 @@ function collisionDetection () {
 
 function updateGameObjects () {
     doggos.forEach(dog => {
+        ctx.save();
+        if(dog.position.x + dog.dimensions.width >= dog.rightObstacle.position.x || dog.position.x <= dog.leftObstacle.position.x + dog.leftObstacle.dimensions.width){
+            dog.velocity.x *= -1;
+            dog.flipped = !dog.flipped;
+        }
         dog.updateAnimation();
+        ctx.restore();
     })
     mitten.updatePosition();
 }

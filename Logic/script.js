@@ -60,10 +60,14 @@ const map = [
 ];
 
 map.forEach((row, i) => {
+    let currDog = null;
     row.forEach((number, j) => {
         switch (number) {
             case 1:
-                doggos.push(new DogObject(40, 40, 32 * j - 16, 32 * i - 16, 1, 0, "./images/DogRun.png", 8, 1))
+                const newDog = new DogObject(60, 60, 32 * j - 16, 32 * i - 24, 1, 0, "./images/DogRun.png", "./images/DogRunFlipped.png",1);
+                newDog.leftObstacle = platforms[platforms.length - 1];
+                currDog = newDog;
+                doggos.push(newDog)
                 break;
             case 2:
                 const newPlatform = new Obstacle(
@@ -73,6 +77,10 @@ map.forEach((row, i) => {
                     32 * i,
                     './images/Crate.png'
                 );
+                if(currDog){
+                    currDog.rightObstacle = newPlatform;
+                    currDog = null;
+                }
                 // Check if platform has neighbors
                 platforms.forEach((pl, idx) => {
                     // has right neighbor?
@@ -98,10 +106,10 @@ map.forEach((row, i) => {
                 platforms.push(newPlatform);
                 break;
             case 3:
-                mice.push(new MouseObject(12, 12, 32 * j + 12, 32 * i + 21, "./images/Mouse.png"))
+                mice.push(new MouseObject(12, 12, 32 * j + 12, 32 * i + 21, "./images/Mouse3.png"))
                 break;
             case 4:
-                platforms.push(new Obstacle(32, 16, 32 * j, 32 * i, "./images/Branch.png"))
+                platforms.push(new Obstacle(32, 16, 32 * j, 32 * i, "./images/Cloud.png"))
                 break;
         }
     });
@@ -147,7 +155,7 @@ function resetGame() {
     row.forEach((number, j) => {
       switch (number) {
         case 3:
-          mice.push(new MouseObject(8, 8, 32 * j + 12, 32 * i + 24, "./images/Mouse.png"));
+          mice.push(new MouseObject(12, 12, 32 * j + 12, 32 * i + 21, "./images/Mouse3.png"));
           break;
       }
     });
@@ -191,8 +199,8 @@ function finishLine() {
 // Game Loop and Controls
 
 function gameLoop() {
-  collisionDetection();
   updateGameObjects();
+  collisionDetection();
   updateCamera(mitten);
   renderGameObjects();
   requestAnimationFrame(gameLoop);

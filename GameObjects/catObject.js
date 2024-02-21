@@ -16,6 +16,15 @@ class CatObject extends gameObject {
     y: 0.5,
   };
 
+  offsetNr = 10;
+
+  offset = {
+    top: this.position.y + this.offsetNr,
+    bottom: this.position.y + this.dimensions.height - this.offsetNr,
+    left: this.position.x + this.offsetNr,
+    right: this.position.x + this.dimensions.width - this.offsetNr
+  }
+
   constructor(
     imagePath,
     width,
